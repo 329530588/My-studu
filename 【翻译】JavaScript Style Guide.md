@@ -3,7 +3,7 @@
  [原文出处：Airbnb JavaScript Style Guide() {](https://github.com/airbnb/javascript)
  
 ##索引
-------------------------------------------------
+
 1. [类型](#1)
 2. [参考](#2)
 3. [对象](#3)
