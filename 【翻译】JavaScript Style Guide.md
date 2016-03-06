@@ -3,7 +3,7 @@
  [原文出处：Airbnb JavaScript Style Guide() {](https://github.com/airbnb/javascript)
  
 ##索引
-------------------------------------------------
+
 1. [类型](#1)
 2. [参考](#2)
 3. [对象](#3)
@@ -11,7 +11,7 @@
 5. [类型](#1)
 
 ## <span id="1">类型</span> 
-------------------------------------------------
+
  + 1.1 **原始类型**：当你访问一个原始类型的时候直接操作他的值。
   - string
   - number
@@ -44,7 +44,7 @@ bar[0] = 9;
 console.log(foo[0], bar[0]); // => 9, 9
 ```
 ## <span id="2">参考</span>
------------------------------------------------
+
 + 2.1 为常量使用`const`，避免使用`var`
 > 为什么？因为这可以保证你的变量不被修改，以免导致bug或者可读性变差。
 
@@ -84,7 +84,7 @@ console.log(a); //referenceError
 console.log(b); //referenceError
 ```
 ## <span id="3">对象</span>
------------------------------------------------
+
 + 3.1 使用字面量创建对象。
 > 以下两种定义方式在作用上没有任何区别，后者节省字符，故推荐后者
 ```javascript
@@ -209,7 +209,7 @@ const good = {
 };
 ```
 ## <span id="4">数组</span>
------------------------------------------------
+
 + 4.1 使用字面量创建数组。
 > Array创建数组，单整数参数时，创建一个该整数长度的数组，其他情况则是创建以arguments为元素的数组。这种表里比兴的表现容易带来混淆。
 ```javascript
@@ -281,6 +281,30 @@ inbox.filter((msg) => {
     return author === 'Harper Lee';
   } else {
     return false;
+  }
+});
+
+// good
+inbox.filter((msg) => {
+  const { subject, author } = msg;
+  if (subject === 'Mockingbird') {
+    return author === 'Harper Lee';
+  }
+
+  return false;
+});
+```
+## <span id="5">解构</span>
+
++ 4.1 使用字面量创建数组。
+> Array创建数组，单整数参数时，创建一个该整数长度的数组，其他情况则是创建以arguments为元素的数组。这种表里比兴的表现容易带来混淆。
+```javascript
+// bad
+const item = new Array();
+
+// good
+const item = [];
+```turn false;
   }
 });
 
