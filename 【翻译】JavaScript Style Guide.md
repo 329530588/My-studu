@@ -1,6 +1,7 @@
 #【翻译】JavaScript Style Guide
 
  [原文出处：Airbnb JavaScript Style Guide() {](https://github.com/airbnb/javascript)
+ 
 1. [类型](#1)
 2. [参考](#2)
 3. [对象](#3)
