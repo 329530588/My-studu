@@ -1,4 +1,4 @@
-# 【note】Python学习笔记
+# 【note】python学习笔记
 ## 一些坑
 ### python的除法有点乱
 #### X/Y

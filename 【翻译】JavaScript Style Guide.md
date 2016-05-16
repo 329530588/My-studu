@@ -304,6 +304,14 @@ const item = new Array();
 
 // good
 const item = [];
+```.1 使用字面量创建数组。
+> Array创建数组，单整数参数时，创建一个该整数长度的数组，其他情况则是创建以arguments为元素的数组。这种表里比兴的表现容易带来混淆。
+```javascript
+// bad
+const item = new Array();
+
+// good
+const item = [];
 ```turn false;
   }
 });
