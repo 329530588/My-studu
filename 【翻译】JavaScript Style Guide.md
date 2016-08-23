@@ -1,20 +1,21 @@
-#【翻译】JavaScript Style Guide
+# 【翻译】JavaScript Style Guide
 
  [原文出处：Airbnb JavaScript Style Guide() {](https://github.com/airbnb/javascript)
- 
-##索引
 
-1. [类型](#1)
-2. [参考](#2)
-3. [对象](#3)
-4. [数组](#4)
-5. [类型](#1)
+## 索引
 
-## <span id="1">类型</span> 
+1. [类型(Types)](#1)
+2. [参考(References)](#2)
+3. [对象(Objects)](#3)
+4. [数组(Arrays)](#4)
+5. [解构(Destructuring)](#5)
+6. [字符串(Strings)](#6)
 
- + 1.1 **原始类型**：当你访问一个原始类型的时候直接操作他的值。
-  - string
-  - number
+## <span id="1">类型</span>
+
++ 1.1 **原始类型**：当你访问一个原始类型的时候直接操作他的值。
+- string
+- number
   - boolean
   - null
   - undefined
@@ -22,14 +23,12 @@
 ```javascript
   const foo = 1;
   let bar = foo;
-  
+
   bar = 9;
-  
-  console.log(foo, bar);  // => 1, 9
+
+  console.log(foo, bar); // => 1, 9
 ```
 
-
-  
 + 1.2 **复杂类型**：当你访问一个复杂类型的时候操作的是这个值的引用。
   - object
   - array
@@ -152,17 +151,17 @@ const abc = 'abc';
 // bad
 const atom = {
   abc: abc,
-  
+
   addValue: function (value) {
-    return atom.value + value;
+  return atom.value + value;
   }
 };
 //good
 const atom = {
   abc,
-  
+
   addValue(value) {
-    return atom.value + value;
+  return atom.value + value;
   }
 };
 ```
@@ -278,9 +277,9 @@ const flat = {};
 inbox.filter((msg) => {
   const { subject, author } = msg;
   if (subject === 'Mockingbird') {
-    return author === 'Harper Lee';
+  return author === 'Harper Lee';
   } else {
-    return false;
+  return false;
   }
 });
 
@@ -288,52 +287,131 @@ inbox.filter((msg) => {
 inbox.filter((msg) => {
   const { subject, author } = msg;
   if (subject === 'Mockingbird') {
-    return author === 'Harper Lee';
+  return author === 'Harper Lee';
   }
 
   return false;
 });
 ```
-## <span id="5">解构</span>
 
-+ 4.1 使用字面量创建数组。
-> Array创建数组，单整数参数时，创建一个该整数长度的数组，其他情况则是创建以arguments为元素的数组。这种表里比兴的表现容易带来混淆。
-```javascript
-// bad
-const item = new Array();
-
-// good
-const item = [];
-```.1 使用字面量创建数组。
-> Array创建数组，单整数参数时，创建一个该整数长度的数组，其他情况则是创建以arguments为元素的数组。这种表里比兴的表现容易带来混淆。
-```javascript
-// bad
-const item = new Array();
-
-// good
-const item = [];
-```turn false;
-  }
-});
-
-// good
-inbox.filter((msg) => {
-  const { subject, author } = msg;
-  if (subject === 'Mockingbird') {
-    return author === 'Harper Lee';
-  }
-
-  return false;
-});
-```
-## <span id="5">解构</span>
+## <span id="5">解构（Destructuring）</span>
 -----------------------------------------------
-+ 4.1 使用字面量创建数组。
-> Array创建数组，单整数参数时，创建一个该整数长度的数组，其他情况则是创建以arguments为元素的数组。这种表里比兴的表现容易带来混淆。
++ 5.1 需要访问到对象多个属性的场景时请使用对象解构(ES6特性)。jscs:[requireObjectDestructuring](http://jscs.info/rule/requireObjectDestructuring)
+> why? 因为解构能把你从创建一堆临时变量的痛苦中拯救出来。
 ```javascript
 // bad
-const item = new Array();
+function getFullName(user) {
+  const firstName = user.firstName;
+  const lastName = user.lastName;
+
+  return `${firstName} ${lastName}`;
+}
 
 // good
-const item = [];
+function getFullName(user) {
+  cons { firstName, lastName } = user;
+  return `${firstName} ${lastName}`;
+}
+
+// best
+function getFullName({ firstName, lastName}) {
+  return `${firstName} ${lastName}`
+}
+```
++ 5.2 使用数组解构。jscs:[ requireArrayDestructuring](http://jscs.info/rule/requireArrayDestructuring)
+```javascript
+const arr = [1, 2, 3, 4];
+
+// bad
+const first = arr[0];
+const second = arr[1];
+
+// good
+const [first, second] = arr;
+```
+
++ 5.3 有多个返回值的场景下使用优先使用对象解构，而不是数组解构。jscs:[ disallowArrayDestructuringReturn](http://jscs.info/rule/disallowArrayDestructuringReturn)
+> Why? 这样做更加灵活，例如在你想要修改返回参数的顺序或者数量的时候。
+```javascript
+// bad
+function processInput(input) {
+  // then a miracle occurs
+  return [left, right, top, bottom];
+}
+
+// 调用时需要考虑到返回值的顺序
+const [left, _, top] = processInput(input);
+
+// good
+function processInput(input) {
+  //then a miracle occurs
+  return { left, right, top, bottom };
+}
+
+// 调用时只需要选择需要的值
+const { left, top } = processInput(input);
+```
+
+## <span id="6">字符串（String）</span>
++ 6.1 使用单引号`''`。eslint:[quotes](http://eslint.org/docs/rules/quotes.html) jscs:[ validateQuoteMarks](http://jscs.info/rule/validateQuoteMarks)
+```javascript
+// bad
+const name = "Capt. Janeway";
+
+// bad - 模板文字应该包含变量值或换行
+const name = `Capt. Janeway`;
+
+// good
+const name = 'Capt. Janeway';
+```
++ 6.2 长字符串不应该分割成多行
+> Why? 分割字符串是项苦差事而且不利于搜索。
+```javascript
+// bad
+const errorMessage = 'This is a super long error that was thrown because \
+of Batman. When you stop to think about how Batman had anything to do \
+with this, you would get nowhere \
+fast.';
+
+// bad
+const errorMessage = 'This is a super long error that was thrown because ' +
+  'of Batman. When you stop to think about how Batman had anything to do ' +
+  'with this, you would get nowhere fast.';
+
+// good
+const errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
+```
++ 6.3 使用模板字符串而不是字符串拼接。eslint:[ prefer-template ](http://eslint.org/docs/rules/prefer-template.html) [template-curly-spacing](http://eslint.org/docs/rules/template-curly-spacing) jscs:[ requireTemplateStrings](http://jscs.info/rule/requireTemplateStrings)
+> Why? 模板具有可读性强，语法精简，换行优雅，支持变量插值的优点
+```javascript
+// bad
+function sayHi(name) {
+  return 'How are you, ' + name + '?';
+}
+
+// bad
+function sayHi(name) {
+  return ['How are you, ', name, '?'].join();
+}
+
+// bad
+function sayHi(name) {
+  return `How are you, ${ name }?`;
+}
+
+// good
+function sayHi(name) {
+  return `How are you, ${name}?`;
+}
+```
++ 6.4 不要用`eval()`解析字符串，因为这或许会带来一些风险
++ 6.5 不到必要不要转义字符。eslint:[ no-useless-escape ](http://eslint.org/docs/rules/no-useless-escape)
+> Why? 反斜杠破坏了可读性，所以不到紧要关头不要使用。
+```javascript
+// bad
+const foo = '\'this\' \i\s \"quoted"';
+
+// good
+const foo = '\'this\' is "quoted"';
+const foo = `'this' is "quoted"`;
 ```
