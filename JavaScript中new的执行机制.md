@@ -1,3 +1,4 @@
+首先我们看一段代码：
 ```
 var _ = function(obj) {
     if (obj instanceof _) return obj;
