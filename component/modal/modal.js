@@ -5,10 +5,10 @@ class Modal {
   
   constructor(id, config) {
     //private
-    
-    this._id = id;
     ele.set(this, document.querySelector('#'+id));
     mask.set(this, document.querySelector('.mask'));
+    
+    this._id = id;
     this._isShow = config.show ? config.show : false; //弹窗默认状态
     var self = this;
     window.onload = function() {
