@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta tagName="viewport" content="width=device-width">
+    <title>target & currentTarget</title>
+    <style>
+        p:hover {
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <p>i am 1</p>
+    <p>i am 2</p>
+    <p>i am 3</p>
+    <p>i am 4</p>
+    <p>i am 5</p>
+    target:<input type="text" id="target"> currentTarget:
+    <input type="text" id="currentTarget">
+</body>
+<script>
+    var target = document.getElementById('target');
+    var currentTarget = document.getElementById('currentTarget');
+    function hide(e) {
+        if (e.target.tagName === 'P') {
+            e.target.style.display = "none";
+            // e.target 指向事件发生的p元素
+            // e.currentTarget 指向了body
+            target.value = e.target.tagName + ' > ' + e.target.innerText;
+            currentTarget.value = e.currentTarget.tagName;
+        }
+    }
+
+    document.body.addEventListener('click', hide, false);
+
+</script>
+
+</html>
